@@ -643,9 +643,16 @@ enum utf8_state {
 #define GRID_FLAG_BG256 0x2
 #define GRID_FLAG_PADDING 0x4
 #define GRID_FLAG_EXTENDED 0x8
+#define GRID_FLAG_FG24 0x10
+#define GRID_FLAG_BG24 0x20
 
 /* Grid line flags. */
 #define GRID_LINE_WRAPPED 0x1
+struct colour_rgb {
+    u_char r;
+    u_char g;
+    u_char b;
+};
 
 /* Grid cell data. */
 struct grid_cell {
@@ -654,7 +661,8 @@ struct grid_cell {
 	u_char			fg;
 	u_char			bg;
 	struct utf8_data	data;
-
+	struct colour_rgb fg_rgb;
+	struct colour_rgb bg_rgb;
 };
 struct grid_cell_entry {
 	u_char			flags;
@@ -1957,7 +1965,6 @@ char	*xterm_keys_lookup(key_code);
 int	 xterm_keys_find(const char *, size_t, size_t *, key_code *);
 
 /* colour.c */
-int	 colour_find_rgb(u_char, u_char, u_char);
 void	 colour_set_fg(struct grid_cell *, int);
 void	 colour_set_bg(struct grid_cell *, int);
 const char *colour_tostring(int);
