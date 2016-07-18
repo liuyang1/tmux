@@ -1,10 +1,18 @@
 language: c
 matrix:
-    include:
-        - compiler: gcc
-        - compiler: clang
-          env: CFLAGS="-g -O2"
+  include:
+  - compiler: gcc
+  - compiler: clang
+    env: CFLAGS="-g -O2"
 before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get -y install debhelper autotools-dev dh-autoreconf file libncurses5-dev libevent-dev pkg-config libutempter-dev build-essential
-script: git checkout 24bit && (CFLAGS= ./autogen.sh) && ./configure --enable-debug && make
+- sudo apt-get update -qq
+- sudo apt-get -y install debhelper autotools-dev dh-autoreconf file libncurses5-dev
+  libevent-dev pkg-config libutempter-dev build-essential
+script: "(CFLAGS= ./autogen.sh) && ./configure --enable-debug && make"
+deploy:
+  provider: releases
+  api_key:
+    secure: MK1kAqK7zK7evm6scQI96q3qzr2GH9Na0p46MXabkdSUDzM0N87FqMx2nr+lIDnYp2LK9D73Y7NjOLef5jkW0HwpAurMK+Px1uri3K9xfsRVxlMSYcuHveP69U3iK0vikwBAoqD1u9erRhPxtel57zi6J6nKVh4YZR5GQDbF6vJxOXrMpVTNHEdgb7R6UbGgPF/KKhGipeGgTL/eSj4yts6JPFxIPG0EQadaXz8Tu1+kkR2EbLhmp9pLBQpHzZEzeU1fPiiFu8pNjJGX14tAh3qXk6dOfTDVaEZmz7BT2OSdFMeVIcTp8SEE3bkt/3WqAAbvshLU8Dj/SGPXoqCcAJK/1SIyEXgZ8rCDUd3YgYmjlMcH+692VzRbFKrruOE9ibDjPHfFwjsOrT6YcXeUT/zEwSX+NjeiDmksjjKjMRDOiwp7pGzpJQhUbsvW6QxGUmrRoQpUJLL05XmfAW9XaYGYppLIIQSnNVtY7eYSqr7JSCoCK+CDkITHVIURCb3LWW4faM5ZNmL7RdTuvpv6nbg0iXcxtUTDmQ+I1Mygi0k2SN4Rth/VkN2GsFK5RHw+OUVXe3Pi8/vo9xo8URKYaUN62voFenpMcyd9PEzkv2F5IOZOWPLJOtyIDXCUbtCvqXIHlyDxQLmtnyc8zdtIfX3fROxz1/b3vjbDOlkJpnM=
+  file: tmux
+  on:
+    repo: liuyang1/tmux
